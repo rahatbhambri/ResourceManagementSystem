@@ -1,11 +1,12 @@
 <template>
     <ul>
-        <li v-for="res in resources" :key="res.title">
+        <li v-for="res in resources" :key="res.title" @click="openTab(res.link)">
             <h2> <a :href=res.link target="_blank">  {{  res.title  }}  </a></h2>
             <h3> {{ res.description }}</h3>
         </li>
     </ul>
     <!-- <p>{{ updatedRes }}</p> -->
+    <!--bar plot from Chars.js  -->
 </template>
  
   
@@ -32,6 +33,11 @@
             }
           ]
         };
+      },
+      methods : {
+        openTab(url){
+            window.open(url, '_blank'); 
+        }
       },
       watch : {
         resource: {
@@ -63,20 +69,50 @@
 </script>
 
 <style scoped>
-
-    li {
-        background-color: green;
-        margin-bottom: 10%;
+    ul li {
+        width: 250px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        margin: 1.5em;
+        cursor: pointer;
+        padding: 1em;
+        background: rgb(13, 145, 168);
+        position: relative;
+        color: white;
+        border-radius: 5px;
     }
-    
-    li:hover {
-        border-bottom-style: none;
-        border-color: blue;
-        background: purple
+    ul li::before,
+    ul li::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        border-radius: 5px;
+        width: 105%;
+        transition: all 0.4s;
+    }
+    ul li::before {
+        left: 0%;
+        height: 130%;
+        background: linear-gradient(to right, #04144e, #000000);
+    }
+    ul li::after {
+        left: -10%;
+        height: 120%;
+        background: #dc0d0dc7;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.164);
+    }
+    /* ul li:hover::before {
+        transform: translateX(-2.5%);
+    } */
+    ul li:hover::after {
+        transform: translateX(5%);
+        background-color: rgb(251, 96, 0);
     }
 
-    ul {
-        background-color: blue;
+    h3{
+     text-align: right;
     }
 </style>
     
